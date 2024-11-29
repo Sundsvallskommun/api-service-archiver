@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.within;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -31,8 +30,6 @@ import se.sundsvall.byggrarchiver.service.ByggrArchiverService;
 @SpringBootTest(properties = {
 	"scheduler.cron.expression=* * * * * *", // Setup to execute every second
 	"spring.flyway.enabled=true",
-	"spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver",
-	"spring.datasource.url=jdbc:tc:mariadb:10.6.4:////",
 	"server.shutdown=immediate",
 	"spring.lifecycle.timeout-per-shutdown-phase=0s"
 })
