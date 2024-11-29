@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
   title: Messaging
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "5.0"
+  version: "5.3"
 servers:
-  - url: http://localhost:57261
+  - url: http://10.170.129.13:8080
     description: Generated server url
 paths:
   /{municipalityId}/webmessage:
@@ -19,6 +19,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -31,7 +38,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -93,6 +100,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -105,7 +119,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -167,6 +181,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -234,6 +255,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -246,7 +274,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -308,6 +336,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -320,7 +355,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -382,6 +417,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -394,7 +436,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -456,6 +498,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -468,7 +517,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -530,6 +579,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -597,6 +653,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -609,7 +672,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -671,6 +734,13 @@ paths:
       parameters:
         - name: x-origin
           in: header
+          description: Origin of the request
+          required: false
+          schema:
+            type: string
+        - name: x-issuer
+          in: header
+          description: Issuer of the request
           required: false
           schema:
             type: string
@@ -683,7 +753,7 @@ paths:
           example: 2281
         - name: async
           in: query
-          description: Whether to send the message asynchronously
+          description: If the message should be sent asynchronously or not
           required: false
           schema:
             type: boolean
@@ -736,10 +806,81 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+  /{municipalityId}/users/{userId}/messages:
+    get:
+      tags:
+        - History Resources
+      summary: Get historical messages sent by a user
+      operationId: getUserMessages
+      parameters:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          schema:
+            type: string
+          example: test
+        - name: page
+          in: query
+          description: Which page to fetch
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Sets the amount of entries per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 15
+          example: 1
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+            application/problem+json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserMessages"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/UserMessages"
   /{municipalityId}/status/message/{messageId}:
     get:
       tags:
-        - Status and History Resources
+        - History Resources
       summary: Get the status for a single message and its deliveries
       operationId: getMessageStatus
       parameters:
@@ -757,15 +898,6 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MessageResult"
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/MessageResult"
         "400":
           description: Bad Request
           content:
@@ -797,10 +929,19 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResult"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/MessageResult"
   /{municipalityId}/status/delivery/{deliveryId}:
     get:
       tags:
-        - Status and History Resources
+        - History Resources
       summary: Get the status for a single delivery
       operationId: getDeliveryStatus
       parameters:
@@ -818,24 +959,6 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeliveryResult"
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/DeliveryResult"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Problem"
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/Problem"
         "400":
           description: Bad Request
           content:
@@ -849,6 +972,15 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/Problem"
                   - $ref: "#/components/schemas/ConstraintViolationProblem"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
         "500":
           description: Internal Server Error
           content:
@@ -858,10 +990,19 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliveryResult"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/DeliveryResult"
   /{municipalityId}/status/batch/{batchId}:
     get:
       tags:
-        - Status and History Resources
+        - History Resources
       summary: "Get the status for a message batch, its messages and their deliveries"
       operationId: getBatchStatus
       parameters:
@@ -879,15 +1020,6 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MessageBatchResult"
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/MessageBatchResult"
         "400":
           description: Bad Request
           content:
@@ -919,10 +1051,19 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageBatchResult"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/MessageBatchResult"
   /{municipalityId}/statistics:
     get:
       tags:
-        - Status and History Resources
+        - Statistics Resources
       summary: Get delivery statistics
       operationId: getStatistics
       parameters:
@@ -964,15 +1105,6 @@ paths:
             type: string
             format: date
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Statistics"
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/Statistics"
         "400":
           description: Bad Request
           content:
@@ -995,10 +1127,19 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Statistics"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Statistics"
   /{municipalityId}/statistics/departments/{department}:
     get:
       tags:
-        - Status and History Resources
+        - Statistics Resources
       summary: Get letter delivery statistics by department
       operationId: getDepartmentStatistics
       parameters:
@@ -1036,19 +1177,6 @@ paths:
             type: string
             format: date
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DepartmentStatistics"
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DepartmentStatistics"
         "400":
           description: Bad Request
           content:
@@ -1071,10 +1199,23 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepartmentStatistics"
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepartmentStatistics"
   /{municipalityId}/statistics/departments:
     get:
       tags:
-        - Status and History Resources
+        - Statistics Resources
       summary: Get letter delivery statistics by department
       operationId: getDepartmentStatistics_1
       parameters:
@@ -1106,19 +1247,6 @@ paths:
             type: string
             format: date
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DepartmentStatistics"
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DepartmentStatistics"
         "400":
           description: Bad Request
           content:
@@ -1141,10 +1269,73 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepartmentStatistics"
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepartmentStatistics"
+  /{municipalityId}/messages/{messageId}/attachments/{fileName}:
+    get:
+      tags:
+        - History Resources
+      summary: Strean attachment by messageId and fileName
+      operationId: readAttachment
+      parameters:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+            application/problem+json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Problem"
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
   /{municipalityId}/message/{messageId}:
     get:
       tags:
-        - Status and History Resources
+        - History Resources
       summary: Get a message and all its deliveries
       operationId: getMessage
       parameters:
@@ -1162,19 +1353,6 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/HistoryResponse"
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/HistoryResponse"
         "400":
           description: Bad Request
           content:
@@ -1206,10 +1384,23 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HistoryResponse"
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HistoryResponse"
   /{municipalityId}/conversation-history/{partyId}:
     get:
       tags:
-        - Status and History Resources
+        - History Resources
       summary: Get the entire conversation history for a given party
       operationId: getConversationHistory
       parameters:
@@ -1241,19 +1432,6 @@ paths:
             type: string
             format: date
       responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/HistoryResponse"
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/HistoryResponse"
         "400":
           description: Bad Request
           content:
@@ -1276,6 +1454,19 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HistoryResponse"
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HistoryResponse"
   /api-docs:
     get:
       tags:
@@ -1644,6 +1835,46 @@ components:
           type: string
           description: The sender of the SMS
           example: sender
+    Address:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the recipient
+          example: John
+        lastName:
+          type: string
+          description: The last name of the recipient
+          example: Doe
+        city:
+          type: string
+          description: The city
+          example: Main Street
+        apartmentNumber:
+          type: string
+          description: The apartment number
+          example: "1101"
+        organizationNumber:
+          type: string
+          description: The organization number of the recipient
+          example: 123456-7890
+        address:
+          type: string
+          description: The address
+          example: Main Street 1
+        careOf:
+          type: string
+          description: The care of
+          example: c/o John Doe
+        zipCode:
+          type: string
+          description: The zip code
+          example: "12345"
+        country:
+          type: string
+          description: The country
+          example: Sweden
+      description: Addresses that gets a letter copy
     LetterAttachment:
       required:
         - content
@@ -1684,6 +1915,10 @@ components:
             type: string
             description: The message party ids
             format: uuid
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
         externalReferences:
           type: array
           description: External references
@@ -2257,6 +2492,117 @@ components:
           type: string
         message:
           type: string
+    MessageAttachment:
+      type: object
+      properties:
+        contentType:
+          type: string
+          description: The attachment content type
+          example: application/pdf
+        fileName:
+          type: string
+          description: The attachment file name
+          example: attachment.pdf
+      description: Message attachment model
+      readOnly: true
+    PagingMetaData:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page
+          format: int32
+          readOnly: true
+          example: 5
+        limit:
+          type: integer
+          description: Displayed objects per page
+          format: int32
+          readOnly: true
+          example: 20
+        count:
+          type: integer
+          description: Displayed objects on current page
+          format: int32
+          readOnly: true
+          example: 13
+        totalRecords:
+          type: integer
+          description: Total amount of hits based on provided search parameters
+          format: int64
+          readOnly: true
+          example: 98
+        totalPages:
+          type: integer
+          description: Total amount of pages based on provided search parameters
+          format: int32
+          readOnly: true
+          example: 23
+      description: PagingMetaData model
+      readOnly: true
+    Recipient:
+      type: object
+      properties:
+        personId:
+          type: string
+          description: The person identifier
+          example: "199001011234"
+        messageType:
+          type: string
+          description: The message type
+          example: SNAIL_MAIL
+        status:
+          type: string
+          description: The message status
+          example: SENT
+      description: Recipient model
+      readOnly: true
+    UserMessage:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: The message id
+          example: b971e0f8-2942-4b45-9fa3-bd2cc22ed76b
+        issuer:
+          type: string
+          description: The message issuer
+          example: and06sod
+        origin:
+          type: string
+          description: The system that the message originated from
+          example: CASEDATA
+        sent:
+          type: string
+          description: When the message was sent
+          format: date-time
+        subject:
+          type: string
+          description: The message subject
+          example: Important message
+        recipients:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/Recipient"
+        attachments:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/MessageAttachment"
+      description: User message model
+      readOnly: true
+    UserMessages:
+      type: object
+      properties:
+        messages:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/UserMessage"
+        _meta:
+          $ref: "#/components/schemas/PagingMetaData"
+      description: User messages model
     LetterStatistics:
       type: object
       properties:
@@ -2348,4 +2694,4 @@ components:
         timestamp:
           type: string
           format: date-time
-  securitySchemes: { }
+  securitySchemes: {}
